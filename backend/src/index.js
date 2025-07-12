@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
-const itemsRouter = require('./routes/items');
+// Only use .router for express, but export the full object for tests
+const itemsModule = require('./routes/items');
+const itemsRouter = itemsModule.router;
 const statsRouter = require('./routes/stats');
 const cors = require('cors');
 const { getCookie, notFound } = require('./middleware/errorHandler');
@@ -24,3 +26,6 @@ app.use('*', notFound);
 getCookie();
 
 app.listen(port, () => console.log('Backend running on http://localhost:' + port));
+
+// For tests
+module.exports = app;
